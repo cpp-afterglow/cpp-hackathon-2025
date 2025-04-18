@@ -1,5 +1,8 @@
+version: '3.8'
+
 services:
   backend:
+    container_name: cpp-backend
     build: ./backend
     ports:
       - "5003:5000"
@@ -8,11 +11,13 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_ENV=development
+    restart: unless-stopped
 
   frontend:
+    container_name: cpp-frontend
     build: ./frontend
     ports:
       - "3000:80"
-
-
-
+    depends_on:
+      - backend
+    restart: unless-stopped
