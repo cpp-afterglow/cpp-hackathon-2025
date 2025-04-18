@@ -35,7 +35,7 @@ cpp-hackathon-2025/
 
 ---
 
-## 🚀 Running the Project
+## 🚀 Running the Project with Docker (Production Build)
 
 From the root directory:
 
@@ -44,10 +44,48 @@ docker compose up --build
 ```
 
 - Flask backend: [http://localhost:5003](http://localhost:5003)
-- React frontend: [http://localhost:3000](http://localhost:3000)
+- React frontend (built + served by Nginx): [http://localhost:3000](http://localhost:3000)
 
 ✅ Backend auto-reloads on code changes  
-⚠️ Frontend is served via Nginx (built version, not dev mode)
+⚠️ Frontend does **not** hot reload in this mode — use local dev mode below!
+
+---
+
+## 🔥 Local Dev Mode with Live Reload (Recommended for Dev)
+
+### Full Workflow: Backend + Frontend Together
+
+1. **Start the backend in Docker** (Flask runs with hot reload):
+
+```bash
+docker compose up -d
+```
+
+🧼 Pro tip: Once a week, you can clean up unused containers/images to free up space:
+```bash
+docker system prune -f
+```
+
+2. **Start the frontend with Vite hot reload** (outside Docker):
+
+```bash
+cd frontend
+npm install      # Only the first time
+npm run dev
+```
+
+> ✅ Open [http://localhost:5173](http://localhost:5173) to view the frontend  
+> ✅ API calls should go to `http://localhost:5003`
+
+3. Edit code in:
+- `frontend/` → auto reloads in browser
+- `backend/` → Flask auto-restarts inside Docker (thanks to `FLASK_ENV=development`)
+
+4. **Stop everything when done**:
+
+```bash
+docker compose down
+```
 
 ---
 
@@ -127,28 +165,9 @@ Pull Request template is located at:
 
 ---
 
-## 🔥 Frontend Dev Mode with Hot Reload
-
-To run just the frontend with **Vite hot reload**:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Then open [http://localhost:5173](http://localhost:5173)
-
-> ⚠️ If the frontend makes API calls to the backend, make sure it targets:
-> `http://localhost:5003` or set `VITE_API_URL=http://localhost:5003` in `frontend/.env`
-
----
-
 ## 💡 Dev Tips
 
 - Use `docker compose down` to stop containers
 - Use `docker ps` or `docker compose ps` to see what’s running
 - Use `docker exec -it cpp-backend bash` to enter the backend container
-- You can skip building frontend Docker during dev and just use `npm run dev`
-
----
+- You can skip frontend Docker during dev and just use `npm run dev`
