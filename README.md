@@ -1,13 +1,13 @@
 # CPP Hackathon 2025 – Full Stack Project
 
-This project uses a **React frontend** and a **Flask backend**, separated into `frontend/` and `backend/`, and is fully containerized using Docker and Docker Compose.
+This project is a Dockerized full-stack app using a **React frontend** and a **Flask backend**, designed for clean team collaboration and fast development.
 
 ---
 
-## 🔧  Requirements (If you use docker)
+## 🔧 Requirements (for Docker users)
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- No need for Python, Node, or virtual environments locally!
+- No need to install Python, Node, or use virtual environments locally!
 
 ---
 
@@ -19,39 +19,61 @@ cpp-hackathon-2025/
 ├── backend/         # Flask API
 │   ├── app.py
 │   ├── requirements.txt
+│   ├── .env.example
 │   └── Dockerfile
 │
-├── frontend/        # React App (optional setup later)
+├── frontend/        # React (Vite) App
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── Dockerfile
 │
-└── docker-compose.yml
+├── docker-compose.yml
+├── .gitignore
+└── .env.example     # Root .env for Docker Compose (optional)
 ```
 
 ---
 
-## 🚀 Running the Project (Dev Mode with Hot Reload)
+## 🚀 Running the Project
 
-From the root of the project:
+From the root directory:
 
 ```bash
 docker compose up --build
 ```
 
 - Flask backend: [http://localhost:5003](http://localhost:5003)
-- React frontend: (TBD)
+- React frontend: [http://localhost:3000](http://localhost:3000)
 
-Flask runs with hot reload, so when you change `app.py`, it will auto-restart the server.
+✅ Backend auto-reloads on code changes  
+⚠️ Frontend is served via Nginx (built version, not dev mode)
+
+---
+
+## ⚙️ Environment Variables
+
+1. Copy the example file:
+
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
+
+2. (Optional) If using root-level `.env` with Docker Compose:
+
+   ```bash
+   cp .env.example .env
+   ```
 
 ---
 
 ## 🧪 Example: Test the Backend
 
-Open your browser or use curl:
-
 ```bash
 curl http://localhost:5003/
 ```
 
-Expected response:
+Expected output:
 
 ```json
 { "message": "Hello from Flask backend!" }
@@ -59,56 +81,74 @@ Expected response:
 
 ---
 
-## ➕ Adding Python Packages (Team Workflow)
+## 🧱 Adding Python Packages
 
-1. **Install the package inside the running container**:
+```bash
+docker exec -it cpp-backend pip install <package>
+docker exec cpp-backend pip freeze > backend/requirements.txt
+```
 
-   ```bash
-   docker exec -it cpp-hackathon-2025-backend-1 pip install <package-name>
-   ```
+Then:
 
-   Example:
-   ```bash
-   docker exec -it cpp-hackathon-2025-backend-1 pip install pandas
-   ```
-
-2. **Update `requirements.txt`** so everyone stays in sync:
-
-   ```bash
-   docker exec cpp-hackathon-2025-backend-1 pip freeze > backend/requirements.txt
-   ```
-
-3. **Commit your changes**:
-
-   ```bash
-   git add backend/requirements.txt
-   git commit -m "Added pandas to backend"
-   git push
-   ```
-
-> ✅ Everyone else will get the same environment next time they run `docker compose up --build`.
+```bash
+git add backend/requirements.txt
+git commit -m "Added <package>"
+git push
+```
 
 ---
 
-## 🔁 Rebuilding After Changing `requirements.txt`
+## 🔁 Rebuilding the App
 
-If you or a teammate updates the dependencies:
+If you or a teammate updates dependencies:
 
 ```bash
 docker compose down
 docker compose up --build
 ```
 
-This ensures the container rebuilds with the latest packages.
+---
+
+## 🤝 Team Workflow: Pull Requests
+
+> All code should be merged into `main` through pull requests!
+
+1. Checkout a feature branch (e.g., `backend`, `frontend`)
+2. Commit and push your changes
+3. Open a **Pull Request (PR)** from your branch into `main`
+4. Another teammate should review and approve before merging
+5. After merge, pull the latest `main` into your branch
+
+Pull Request template is located at:
+
+```plaintext
+.github/PULL_REQUEST_TEMPLATE.md
+```
 
 ---
 
-## 💡 Tips
+## 🔥 Frontend Dev Mode with Hot Reload
 
-- Use `docker compose down` to stop the app
-- Use `docker compose ps` to check status
-- Use `docker exec -it cpp-hackathon-2025-backend-1 bash` to open a shell in the backend container
+To run just the frontend with **Vite hot reload**:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Then open [http://localhost:5173](http://localhost:5173)
+
+> ⚠️ If the frontend makes API calls to the backend, make sure it targets:
+> `http://localhost:5003` or set `VITE_API_URL=http://localhost:5003` in `frontend/.env`
 
 ---
 
-Let me know if you want help setting up the React `frontend/` too!
+## 💡 Dev Tips
+
+- Use `docker compose down` to stop containers
+- Use `docker ps` or `docker compose ps` to see what’s running
+- Use `docker exec -it cpp-backend bash` to enter the backend container
+- You can skip building frontend Docker during dev and just use `npm run dev`
+
+---
