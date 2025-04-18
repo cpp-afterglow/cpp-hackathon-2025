@@ -5,9 +5,16 @@ function App() {
   const [message, setMessage] = useState("...");
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE}/`)
+    const url = `${import.meta.env.VITE_API_BASE}/`;
+    console.log("✅ Fetching from:", url);
+  
+    fetch(url)
       .then(res => res.json())
-      .then(data => setMessage(data.message));
+      .then(data => setMessage(data.message))
+      .catch(err => {
+        console.error("❌ Fetch failed:", err);
+        setMessage("⚠️ Could not connect to backend");
+      });
   }, []);
 
   return (
