@@ -17,7 +17,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
-# ✅ Create tables on startup
+# Create tables on startup
 with app.app_context():
     db.create_all()
 
