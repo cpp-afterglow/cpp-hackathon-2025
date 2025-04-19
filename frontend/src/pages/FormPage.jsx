@@ -5,7 +5,6 @@ import "../styles/Login.css"; // reusing same background SORRY but faster i thin
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-
 const FormPage = ({ goBack }) => {
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);

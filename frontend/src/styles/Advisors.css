@@ -1,0 +1,86 @@
+.advisor-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #ff5f6d, #ffc371);
+    box-sizing: border-box;
+  }
+  
+  .advisor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #fff;
+    background-color: transparent; 
+  }
+  
+  .advisor-name-box {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .advisor-signout {
+    font-size: 1rem;
+    text-decoration: underline;
+    color: #ffe9ec;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-right: 1rem;
+  }
+  
+  .advisor-signout:hover {
+    color: #ffffff;
+  }
+  
+  
+  .advisor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2rem;
+    height: calc(100vh - 6rem);
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  
+  .advisor-section {
+    background-color: #1a1c2c;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: #ffe9ec;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+  
+  input {
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: none;
+  }
+  
+  button {
+    background-color: #eec7b3;
+    border: none;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .graph-placeholder {
+    width: 100%;
+    height: 94%;
+
+    background-color: #2e3a59;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+  }
+  
