@@ -76,7 +76,7 @@ const FormPage = ({ goBack }) => {
           </CardHeader>
           <CardBody className="lin-card-body">
             {submitted ? (
-              <p className="text-green-300 text-lg">Your journal was submitted, Thank you!</p>
+              <p className="lin-card-header">Your journal was submitted, Thank you!</p>
             ) : (
                 <textarea
                     className="lin-textarea"

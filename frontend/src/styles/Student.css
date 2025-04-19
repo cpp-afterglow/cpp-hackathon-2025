@@ -87,6 +87,7 @@
     align-items: center;
     justify-content: center;
     color: #ffe9ec;
+    overflow: hidden;
 }
 
 .snt-card-center {
