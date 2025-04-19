@@ -1,7 +1,5 @@
 
-import {Card, CardHeader, CardBody, CardFooter} from "@heroui/react";
 import { useState } from 'react';
-import { Button } from "@heroui/react";
 import { AnimatePresence, motion } from 'framer-motion';
 import ChoiceCard from "../components/ChoiceCard";
 import LoginFormCard from "../components/LoginForm";
@@ -16,7 +14,7 @@ const LoginPage = () => {
     const renderCard = () => {
         switch (selectedRole) {
           case 'student':
-          case 'faculty':
+          case 'advisor':
             return <LoginFormCard role={selectedRole} goBack={goBack} />;
           case 'create':
             return <CreateAccountCard goBack={goBack} />;

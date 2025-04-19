@@ -1,4 +1,4 @@
-.env
+backend/.env
 docker-compose.override.yml
 
 # Python
@@ -9,7 +9,7 @@ __pycache__/
 
 # Flask
 instance/
-.env
+backend/.env
 *.env
 
 # Node

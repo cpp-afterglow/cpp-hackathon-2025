@@ -11,8 +11,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-<<<<<<< Updated upstream
-=======
 }
 
 .snt-card {
@@ -111,5 +109,4 @@
     color: #ffe9ec;
     font-size: large;
     margin-bottom: 2%;
->>>>>>> Stashed changes
 }

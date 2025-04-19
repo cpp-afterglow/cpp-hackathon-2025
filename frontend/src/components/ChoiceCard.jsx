@@ -5,12 +5,12 @@ import "../styles/Login.css";
 const ChoiceCard = ({onSelect}) =>{
     return(
         <Card className="lin-card">
-            <h2 className="lin-card-header">You are ...</h2>
+            <h2 className="lin-card-header">You are...</h2>
       <CardBody className="lin-card-body">
           <Button className="lin-button" onClick={() => onSelect('student')}>
             Student
           </Button>
-          <Button className="lin-button" onClick={() => onSelect('faculty')}>
+          <Button className="lin-button" onClick={() => onSelect('advisor')}>
             Faculty
           </Button>
       </CardBody>

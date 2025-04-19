@@ -2,12 +2,15 @@ import { Card, CardBody, CardFooter, CardHeader, Input } from "@heroui/react";
 import { Button } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useUser } from "../Context";
 import "../styles/Login.css";
 
 const LoginFormCard = ({ role, goBack }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useUser();
   const navigate = useNavigate();
+
     const handleLogin = async () => {
       try {
           const response = await fetch(`${import.meta.env.VITE_API_BASE}/auth/login`, {
@@ -25,10 +28,12 @@ const LoginFormCard = ({ role, goBack }) => {
           const data = await response.json();
         
           if (response.ok) {
+            const userData = {id: data.id, name: data.name, role: data.role};
+            setUser(userData);
             if (role === "student") {
               navigate("/student");
-            } else if (role === "faculty") {
-              navigate("/faculty");
+            } else if (role === "advisor") {
+              navigate("/advisor");
             } else {
               alert("Unknown role");
             }
@@ -53,7 +58,7 @@ const LoginFormCard = ({ role, goBack }) => {
           </p>
         <CardHeader className="lin-card-body">
             <h2 className="lin-card-header">
-            {role === 'student' ? 'Student' : 'Faculty'} Login
+            {role === 'student' ? 'Student' : 'Advisor'} Login
             </h2>
         </CardHeader>
       <CardBody className="lin-card-body-center">
