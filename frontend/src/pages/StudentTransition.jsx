@@ -11,7 +11,8 @@ const StudentTransition = () => {
   };
 
   const handleNo = async () => {
-    const f = localStorage.getItem('form');
+    // const f = localStorage.getItem('form');
+    const f = JSON.parse(localStorage.getItem('form'));
     const studentId = user.id;
     const sliderVal = f.mood;
     const color = f.color;
