@@ -1,6 +1,6 @@
 # auth.py
 from flask import Blueprint, request, jsonify
-from models import Student, Advisor, MoodSubmission
+from models import db, Student, Advisor, MoodSubmission
 from datetime import date
 
 auth_bp = Blueprint("auth", __name__)
@@ -39,3 +39,47 @@ def login():
         "name": user.name,
         "role": role
     }), 200
+
+#Create a student
+@auth_bp.route("/auth/create-student", methods=["POST"])
+def create_student():
+    from random import choice
+    data = request.get_json()
+
+    name = data.get("name")
+    password = data.get("password")
+
+    if not name or not password:
+        return jsonify({"error": "Name and password are required"}), 400
+
+    #Get all advisors from the DB
+    advisors = Advisor.query.all()
+    #Pick one at random
+    advisor = choice(advisors)
+
+    new_student = Student(name=name, password=password, advisor_id=advisor.id)
+    db.session.add(new_student)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Student created",
+        "id": new_student.id,
+        "assigned_advisor_id": advisor.id,
+        "assigned_advisor_name": advisor.name
+    }), 201
+
+# Create Advisor Account
+@auth_bp.route("/auth/create-advisor", methods=["POST"])
+def create_advisor():
+    data = request.get_json()
+    name = data.get("name")
+    password = data.get("password")
+
+    if not name or not password:
+        return jsonify({"error": "Name and password are required"}), 400
+
+    new_advisor = Advisor(name=name, password=password)
+    db.session.add(new_advisor)
+    db.session.commit()
+
+    return jsonify({"message": "Advisor created", "id": new_advisor.id}), 201
