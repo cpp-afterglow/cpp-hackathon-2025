@@ -1,3 +1,4 @@
+//GraphDisplay.gsx
 import React from "react";
 // import { ResponsiveLine } from "@nivo/line";
 
@@ -17,6 +18,7 @@ const GraphDisplay = ({ graphData }) => {
         pointBorderWidth={2}
         enableSlices="x"
         useMesh={true}
+        colors={{ scheme: "category10" }}
       />
     </div>
   );

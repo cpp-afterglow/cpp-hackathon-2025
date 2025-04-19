@@ -180,7 +180,7 @@
 
   .search-input {
     margin-top: 2rem;
-    margin-bottom: 2rem; /* adds spacing between each input */
+    margin-bottom: 1rem; /* adds spacing between each input */
     padding: 0.8rem;
     width: 100%;
     border-radius: 0.5rem;
@@ -196,15 +196,38 @@
   }
   
   .graph-column {
+    margin-top: 2.0rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    background-color: #2e3a59;
+    gap: 0.8rem;
+    background-color: #bfc4d1;
     padding: 1rem;
     border-radius: 0.5rem;
+    gap: 2rem;
+    color: #1a1c2c;
   }
   
   button {
     margin-top: 1rem;
+    background-color: #eee9ed;
+    color:#000000
+
   }
   
+  .generate-graph-button {
+    margin-top: 5.0rem;
+    height: 50%;
+    background-color: #eee9ed;
+    color: #1a1b1f;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    margin-left: 0.8rem;
+  }
+  
+  .generate-graph-button:hover {
+    background-color: #5a3257;
+  }

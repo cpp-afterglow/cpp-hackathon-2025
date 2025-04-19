@@ -18,9 +18,9 @@ const AdvisorPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [configs, setConfigs] = useState([
-    { studentId: "all", dateRange: "month", dataType: "score", graphType: "line" },
-    { studentId: "all", dateRange: "week", dataType: "mood", graphType: "line" },
-    { studentId: "all", dateRange: "week", dataType: "form", graphType: "line" }
+    { studentId: "", dateRange: "", dataType: ""},
+    { studentId: "", dateRange: "", dataType: ""},
+    { studentId: "", dateRange: "", dataType: ""}
   ]);
   const [graphData, setGraphData] = useState([]);
   
@@ -31,17 +31,21 @@ const AdvisorPage = () => {
   };
   
   const generateGraph = async () => {
+    const filtered = configs.filter(c =>
+      c.studentId && c.dateRange && c.dataType
+    );
+    if (!filtered.length) return;
+  
     const res = await fetch(`${import.meta.env.VITE_API_BASE}/advisor/${advisorId}/graph-data`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ selections: configs })
+      body: JSON.stringify({ selections: filtered })
     });
     const data = await res.json();
     setGraphData(data);
   };
   
 
-  
 
   const advisorName = user.name;
   const advisorId = user.id; 
