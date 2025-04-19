@@ -60,8 +60,8 @@ const AdvisorPage = ({ advisorName }) => {
                 />
               ))}
               <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
-                <button onClick={() => setPage((p) => Math.max(1, p - 1))}>Previous</button>
-                <button onClick={() => setPage((p) => p + 1)}>Next</button>
+                <button className='adv-button' onClick={() => setPage((p) => Math.max(1, p - 1))}>Previous</button>
+                <button className='adv-button' onClick={() => setPage((p) => p + 1)}>Next</button>
               </div>
             </>
           )}
@@ -70,6 +70,7 @@ const AdvisorPage = ({ advisorName }) => {
         <div className="advisor-section top-right">
             <h3 className="advisor-section-title">Search Functions</h3>
             <input
+                className="adv-input"
                 type="text"
                 placeholder="Search by name"
                 value={searchQuery}
@@ -95,6 +96,7 @@ const AdvisorPage = ({ advisorName }) => {
                 </div>
             )}
             <input
+                className="adv-input"
                 type="date"
                 onChange={(e) => {
                     const selectedDate = e.target.value;
@@ -108,8 +110,8 @@ const AdvisorPage = ({ advisorName }) => {
 
         <div className="advisor-section bottom-left">
           <h3 className="advisor-section-title">Graph Settings</h3>
-          <button>Single Variable</button>
-          <button>Multiple Variables</button>
+          <button className="adv-button">Single Variable</button>
+          <button className="adv-button">Multiple Variables</button>
         </div>
 
         <div className="advisor-section bottom-right">

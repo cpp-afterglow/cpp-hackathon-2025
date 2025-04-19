@@ -10,7 +10,7 @@ const ChoiceCard = ({onSelect}) =>{
           <Button className="lin-button" onClick={() => onSelect('student')}>
             Student
           </Button>
-          <Button className="lin-button" onClick={() => onSelect('faculty')}>
+          <Button className="lin-button" onClick={() => onSelect('advisor')}>
             Faculty
           </Button>
       </CardBody>

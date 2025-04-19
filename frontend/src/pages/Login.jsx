@@ -16,7 +16,7 @@ const LoginPage = () => {
     const renderCard = () => {
         switch (selectedRole) {
           case 'student':
-          case 'faculty':
+          case 'advisor':
             return <LoginFormCard role={selectedRole} goBack={goBack} />;
           case 'create':
             return <CreateAccountCard goBack={goBack} />;

@@ -32,8 +32,8 @@ const LoginFormCard = ({ role, goBack }) => {
             setUser(userData);
             if (role === "student") {
               navigate("/student");
-            } else if (role === "faculty") {
-              navigate("/faculty");
+            } else if (role === "advisor") {
+              navigate("/advisor");
             } else {
               alert("Unknown role");
             }
@@ -58,7 +58,7 @@ const LoginFormCard = ({ role, goBack }) => {
           </p>
         <CardHeader className="lin-card-body">
             <h2 className="lin-card-header">
-            {role === 'student' ? 'Student' : 'Faculty'} Login
+            {role === 'student' ? 'Student' : 'Advisor'} Login
             </h2>
         </CardHeader>
       <CardBody className="lin-card-body">
