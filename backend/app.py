@@ -6,4 +6,4 @@ CORS(app)  # <- This allows all origins by default
 
 @app.route("/")
 def hello():
-    return jsonify(message="Hello from Flask backend!")
+    return jsonify(message="Hello Flask is Running and Connected !!")
