@@ -24,25 +24,6 @@ const StudentMainForm = () => {
 
   const nextPage = async() =>
   {
-    try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE}/submit-mood`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(pd),
-        });
-  
-        const data = await response.json();
-  
-        if (response.ok) {
-          console.log("Score submitted:", data);
-        } else {
-          console.error("Error submitting score:", data.error);
-        }
-      } catch (error) {
-        console.error("Submission error:", error);
-      }
         localStorage.setItem('form', JSON.stringify(formData));
         navigate('/transition');
   };

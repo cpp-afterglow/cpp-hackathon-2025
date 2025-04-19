@@ -70,9 +70,8 @@ const AdvisorPage = ({ advisorName }) => {
         <div className="advisor-section top-right">
             <h3 className="advisor-section-title">Search Functions</h3>
             <input
-                className="adv-input"
-                type="text"
                 className="search-input"
+                type="text"
                 placeholder="Search by name"
                 value={searchQuery}
                 onChange={async (e) => {
@@ -97,7 +96,6 @@ const AdvisorPage = ({ advisorName }) => {
                 </div>
             )}
             <input
-                className="adv-input"
                 type="date"
                 className="search-input"
                 onChange={(e) => {

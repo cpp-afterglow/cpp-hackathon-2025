@@ -16,10 +16,9 @@ const StudentPage = () => {
     const fetchSubmissions = async () => {
       const res = await fetch(`${import.meta.env.VITE_API_BASE}/student/${id}/submissions`);
       const data = await res.json();
-      setMoods(data.moods);
-      setForms(data.forms);
-      setStudentName(data.name); 
-      setScores(data.scores);
+      setMoods(data.moods || []);         
+    setForms(data.forms || []);      
+    setStudentName(data.name || "");     
     };
     fetchSubmissions();
   }, [id]);
