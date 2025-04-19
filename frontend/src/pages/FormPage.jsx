@@ -47,10 +47,12 @@ const FormPage = ({ goBack }) => {
 
       if (response.ok) {
         setSubmitted(true);
-        localStorage.removeItem("form");
+        localStorage.clear();
+        console.log(data.summary);
+        localStorage.setItem("ai_summ", data.summary);
 
         setTimeout(() => {
-          navigate("/"); 
+          navigate("/ai-summary");
         }, 1500);
       } else {
         console.error("Error submitting score:", data.error);

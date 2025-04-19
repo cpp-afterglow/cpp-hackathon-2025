@@ -37,7 +37,8 @@ const StudentTransition = () => {
 
       if (response.ok) {
         localStorage.clear();
-        navigate("/");
+        localStorage.setItem("ai_summ", data.summary);
+        navigate("/ai-summary");
       } else {
         console.error("Error submitting score:", data.error);
       }

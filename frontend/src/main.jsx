@@ -16,6 +16,7 @@ import StudentTransition from "./pages/StudentTransition.jsx";
 import StudentPage from "./pages/StudentPage.jsx";
 import ScorePage from "./pages/ScorePage.jsx";
 import ScoreByValuePage from "./pages/ScoreByValuepage.jsx";
+import AISummary from "./pages/AISummary.jsx";
 
 const Layout = () => {
   return (
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/score-by-value/:value",
         element: <ScoreByValuePage />
+      },
+      {
+        path: "/ai-summary",
+        element: <AISummary />
       }
     ]
   }
