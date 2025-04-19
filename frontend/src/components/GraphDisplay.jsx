@@ -1,5 +1,5 @@
 import React from "react";
-import { ResponsiveLine } from "@nivo/line";
+// import { ResponsiveLine } from "@nivo/line";
 
 const GraphDisplay = ({ graphData }) => {
   if (!graphData.length) return <div className="graph-placeholder">Currently None Selected</div>;

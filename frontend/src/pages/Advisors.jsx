@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "@heroui/react";
 import "../styles/Advisors.css";
 import { useNavigate } from "react-router-dom";
 import AdvisorCard from "../components/AdvisorCard";
 import { useUser } from "../Context";
 import GraphSettingsPanel from "../components/GraphSettingsPanel";
 import GraphDisplay from "../components/GraphDisplay";
+import { ScrollShadow } from "@heroui/react";
 
 
 
@@ -72,18 +74,20 @@ const AdvisorPage = () => {
     <div className="advisor-container">
       <div className="advisor-header">
         <div className="advisor-name-box">{advisorName}</div>
-        <div className="advisor-signout" onClick={handleSignOut}>
-          Sign Out
-        </div>
+        <Button className="advisor-signout" onPress={handleSignOut}>
+                    Sign Out
+        </Button>
       </div>
 
       <div className="advisor-grid">
         <div className="advisor-section top-left">
           <h3 className="advisor-section-title">High Priority Students</h3>
+          <div className="hp-container">
           {students.length === 0 ? (
             <p>No recent scores found.</p>
           ) : (
             <>
+            <div className="adv-scores">
               {students.map((student) => (
                 <AdvisorCard
                   key={student.id}
@@ -91,12 +95,14 @@ const AdvisorPage = () => {
                   onClick={goToStudentPage}
                 />
               ))}
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
-                <button className='adv-button' onClick={() => setPage((p) => Math.max(1, p - 1))}>Previous</button>
-                <button className='adv-button' onClick={() => setPage((p) => p + 1)}>Next</button>
+              </div>
+              <div style={{ width: "80%", display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
+                <Button className='adv-button' onClick={() => setPage((p) => Math.max(1, p - 1))}>Previous</Button>
+                <Button className='adv-button' onClick={() => setPage((p) => p + 1)}>Next</Button>
               </div>
             </>
           )}
+          </div>
         </div>
 
         <div className="advisor-section top-right">
@@ -120,6 +126,7 @@ const AdvisorPage = () => {
                 />
                 {results.length > 0 && (
                 <div className="search-dropdown">
+                    
                     {results.map((s) => (
                     <div key={s.id} className="search-option" onClick={() => navigate(`/student/${s.id}`)}>
                         {s.name}
