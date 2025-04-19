@@ -1,9 +1,10 @@
 // pages/FormPage.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardBody, CardFooter, CardHeader, Textarea, Button } from "@heroui/react";
 import "../styles/Login.css"; // reusing same background SORRY but faster i think!!
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+
 
 
 const FormPage = ({ goBack }) => {
