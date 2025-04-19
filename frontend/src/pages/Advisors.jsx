@@ -141,10 +141,13 @@ const AdvisorPage = () => {
             <input
                 type="date"
                 className="search-input"
-                onChange={(e) => {
-                    const selectedDate = e.target.value;
-                    if (selectedDate) navigate(`/score/${selectedDate}`);
-                }}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      const selectedDate = e.target.value;
+                      if (selectedDate) navigate(`/score/${selectedDate}`);
+                    }
+                  }}
                 placeholder="Search by date"
             />
             <input
