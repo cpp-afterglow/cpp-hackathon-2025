@@ -158,4 +158,23 @@
     color: #7d7c85;
   }
   
+  .graph-settings {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .graph-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #2e3a59;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  button {
+    margin-top: 1rem;
+  }
   

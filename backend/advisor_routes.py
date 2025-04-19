@@ -145,6 +145,57 @@ def search_by_score(advisor_id):
         for score, student in results
     ])
 
+@advisor_bp.route("/advisor/<int:advisor_id>/graph-data", methods=["POST"])
+def generate_graph_data(advisor_id):
+    data = request.get_json()
+    selected_options = data.get("selections", [])
+
+    if not selected_options:
+        return jsonify({"error": "No selections provided"}), 400
+
+    response_data = []
+
+    for index, selection in enumerate(selected_options):
+        student_id = selection.get("studentId")
+        date_range = selection.get("dateRange")
+        data_type = selection.get("dataType")
+        graph_label = f"Student {student_id}" if student_id != "all" else "All Students"
+
+        # Base query
+        query = db.session.query(Score)
+
+        if student_id != "all":
+            query = query.filter(Score.student_id == student_id)
+        else:
+            # Only include scores for students under the current advisor
+            query = query.join(Student).filter(Student.advisor_id == advisor_id)
+
+        # Date filtering
+        if date_range == "past_month":
+            from datetime import datetime, timedelta
+            query = query.filter(Score.date >= datetime.utcnow() - timedelta(days=30))
+        elif date_range == "past_week":
+            from datetime import datetime, timedelta
+            query = query.filter(Score.date >= datetime.utcnow() - timedelta(days=7))
+
+        # Execute query
+        scores = query.order_by(Score.date.asc()).all()
+
+        # Prepare series data
+        line_data = {
+            "id": graph_label + f" - {data_type}",
+            "data": []
+        }
+
+        for score in scores:
+            if data_type == "score":
+                line_data["data"].append({"x": score.date.isoformat(), "y": score.daily_score})
+
+        if line_data["data"]:
+            response_data.append(line_data)
+
+    return jsonify(response_data), 200
+
 
 
 
