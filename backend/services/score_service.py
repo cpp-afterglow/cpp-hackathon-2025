@@ -4,27 +4,6 @@ import re
 from datetime import date
 from models import db, Score
 
-# Score weights based on selected mood color
-color_weights = {
-    'red': 10,
-    'blue': 15,
-    'green': -10,
-    'yellow': 0,
-    'orange': -15,
-    'black': 20,
-    'pink': -5,
-    'brown': 15,
-}
-
-# Score weights based on selected image
-image_weights = {
-    'happy.png': -10,
-    'sad.png': 10,
-    'angry.png': 15,
-    'relaxed.png': -5,
-    'nervous.png': 10,
-    'excited.png': -3,
-}
 
 # OpenAI client for sentiment analysis
 client = OpenAI()  # read API key
@@ -45,15 +24,69 @@ def get_sentiment_score(text):
     match = re.search(r'-?\d+\.\d+', message)
     return float(match.group()) if match else 0.0
 
+
+# Generate text summary based on user input values
+def summarize_mood(slider_value, color, image_name, score, sentiment_text=None):
+    mood_info = f"""
+    Slider value: {slider_value}
+    Color selected: {color}
+    Image selected: {image_name}
+    Final score: {score}
+    """
+    if sentiment_text:
+        mood_info += f"\nJournal text: {sentiment_text}"
+
+    prompt = f"""Based on the following mood inputs, write a short summary (1-2 sentences) in English that describes the user's current emotional state. Be supportive and empathetic.
+
+{mood_info}
+"""
+
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    return response.choices[0].message.content.strip()
+
+
+# Use AI to evaluate symbolic input like colors or image labels
+def get_symbolic_sentiment_score(input_type, value):
+    prompt = f"""As a psychologist, rate the emotional impact of this {input_type} on a scale from -1 (very negative) to 1 (very positive). Return only a number.
+
+{value}
+"""
+
+    response = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    match = re.search(r'-?\d+\.\d+', response.choices[0].message.content)
+    return float(match.group()) if match else 0.0
+
+
 # Calculate and store the final mental health score in the database
 def calculate_and_store_score(student_id, mood_submission, image_name, form_submission=None, ):
-    # Base score = slider value + color weight + image weight
-    base_score = mood_submission.slider_value + color_weights.get(mood_submission.color.lower(), 0) + image_weights.get(image_name.lower(), 0)
 
-    # If a journal text is submitted, include sentiment analysis in score
+    # AI transfer color and image to score
+    color_score = get_symbolic_sentiment_score("color", mood_submission.color)
+    image_score = get_symbolic_sentiment_score("image", image_name)
+
+    # Convert -1~1 → 0~20, then combine with slider
+    base_score = (
+        mood_submission.slider_value
+        + int((color_score + 1) * 10)
+        + int((image_score + 1) * 10)
+    )
+
+    # User add text form, and it adds text score
     if form_submission:
         sentiment = get_sentiment_score(form_submission.text)
-        text_score = int((sentiment + 1) * 50)  # -1〜1 → 0〜100
+        text_score = int((sentiment + 1) * 50)
         final_score = int(text_score * 0.7 + base_score * 0.3)
     else:
         final_score = base_score
@@ -76,5 +109,15 @@ def calculate_and_store_score(student_id, mood_submission, image_name, form_subm
         db.session.add(new_score)
 
     db.session.commit()
-    return final_score
+    return {
+        "score": final_score,
+        "summary": summarize_mood(
+            mood_submission.slider_value,
+            mood_submission.color,
+            image_name,
+            final_score,
+            form_submission.text if form_submission else None
+        )
+    }
+
 

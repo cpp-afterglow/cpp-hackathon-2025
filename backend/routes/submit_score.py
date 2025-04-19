@@ -46,7 +46,16 @@ def submit_score():
         db.session.add(form)
         db.session.commit()
 
-    # Calculate and store the score
-    score = calculate_and_store_score(student_id, mood, form)
 
-    return jsonify({"message": "Score submitted", "score": score}), 200
+    # Generate text summary based on user inpout
+    result = calculate_and_store_score(student_id, mood, image, form)
+
+    # Debug
+    print("SUMMARY GENERATED:", result["summary"])
+
+    return jsonify({
+        "message": "Score submitted",
+        "score": result["score"],
+        "summary": result["summary"]
+    }), 200
+
