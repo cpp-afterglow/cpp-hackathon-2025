@@ -1,0 +1,14 @@
+.snt{
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom,
+        #0f0c29 0%,
+        #0f0c29 10%,   
+        #302b63 30%,   
+        #ff5f6d 60%,    
+        #ffc371 100%    
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

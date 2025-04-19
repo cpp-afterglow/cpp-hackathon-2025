@@ -1,8 +1,46 @@
 import { Card, CardBody, CardFooter, CardHeader, Input } from "@heroui/react";
 import { Button } from "@heroui/react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "../styles/Login.css";
 
 const LoginFormCard = ({ role, goBack }) => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+    const handleLogin = async () => {
+      try {
+          const response = await fetch(`${import.meta.env.VITE_API_BASE}/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name, 
+              password: password, 
+              role: role, 
+            }),
+          });
+        
+          const data = await response.json();
+        
+          if (response.ok) {
+            if (role === "student") {
+              navigate("/student");
+            } else if (role === "faculty") {
+              navigate("/faculty");
+            } else {
+              alert("Unknown role");
+            }
+          } else {
+            alert(data.error);
+          }
+        } catch(error) {
+          console.error("Login error:", error);
+          alert("An error occurred during login.");
+        }
+      };
+
   return (
     <Card className="lin-card">
         <p className="back-button">
@@ -25,6 +63,8 @@ const LoginFormCard = ({ role, goBack }) => {
           placeholder="Enter your name"
           label="Name"
           type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Input
           isRequired
@@ -32,10 +72,12 @@ const LoginFormCard = ({ role, goBack }) => {
           placeholder="Enter your password"
           label="Password"
           type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </CardBody>
       <CardFooter className="lin-card-body">
-        <Button className="lin-submit">Login</Button>
+        <Button className="lin-submit" onPress={handleLogin}>Login</Button>
       </CardFooter>
     </Card>
   );

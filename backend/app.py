@@ -10,7 +10,7 @@ from auth import auth_bp
 load_dotenv()  # Loads DATABASE_URL from .env
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # DB Config
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")

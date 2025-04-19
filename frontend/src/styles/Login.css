@@ -33,6 +33,10 @@ indigo: #1a1c2c
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 
 }
+.lin-card-tall {
+    height: 60vh;
+    width: 40vw;
+  }
 
 .lin-card-header {
     font-size: xx-large;
@@ -94,6 +98,11 @@ indigo: #1a1c2c
     border-radius: 0.5rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+
+.radio-text {
+    color: #ffe9ec;
 }
 
 .lin-button:hover {

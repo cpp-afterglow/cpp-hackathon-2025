@@ -8,6 +8,7 @@ import { HeroUIProvider } from "@heroui/react";
 
 import TestPage from "./pages/Test.jsx";
 import LoginPage from "./pages/Login.jsx";
+import StudentMainForm from "./pages/StudentMainForm.jsx";
 
 const Layout = () => {
   return (
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
         element: <LoginPage />
       },
       {
-        path: "/login",
-        element: <TestPage />
+        path: "/student",
+        element: <StudentMainForm />
       },
     ]
   }
