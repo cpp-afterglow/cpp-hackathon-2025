@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/advisor",
-        element: <AdvisorPage advisorName="Dr. Johnson" />
+        element: <AdvisorPage />
       },
       {
         path: "/transition",

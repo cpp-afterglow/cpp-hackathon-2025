@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import "../styles/Advisors.css";
 import { useNavigate } from "react-router-dom";
 import AdvisorCard from "../components/AdvisorCard";
+import { useUser } from "../Context";
 
-const AdvisorPage = ({ advisorName }) => {
+const AdvisorPage = () => {
+  const { user } = useUser();
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
 
-  const advisorId = 1; // TODO: Replace with dynamic advisor ID later
+  const advisorName = user.name;
+  const advisorId = user.id; 
 
   useEffect(() => {
     const fetchStudents = async () => {

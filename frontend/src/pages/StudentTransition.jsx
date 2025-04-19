@@ -11,11 +11,10 @@ const StudentTransition = () => {
   };
 
   const handleNo = async () => {
-    const f = localStorage.getItem('form');
     const studentId = user.id;
-    const sliderVal = f.mood;
-    const color = f.color;
-    const img = f.image;
+    const sliderVal = parseInt(localStorage.getItem('mood'), 10);
+    const color = localStorage.getItem('color');
+    const img = localStorage.getItem('image');
     const date = new Date().toISOString().split("T")[0];
 
     const pd = {
@@ -37,7 +36,8 @@ const StudentTransition = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Score submitted:", data);
+        localStorage.clear();
+        navigate("/");
       } else {
         console.error("Error submitting score:", data.error);
       }
@@ -45,8 +45,6 @@ const StudentTransition = () => {
       console.error("Submission error:", error);
     }
 
-    localStorage.clear();
-    navigate("/");
   };
 
   return (
