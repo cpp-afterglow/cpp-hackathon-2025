@@ -10,6 +10,7 @@ from form_routes import form_bp
 
 load_dotenv()  # Loads DATABASE_URL from .env
 
+
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
