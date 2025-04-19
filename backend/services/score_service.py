@@ -8,8 +8,12 @@ from models import db, Score
 color_weights = {
     'red': 10,
     'blue': 15,
-    'green': -5,
-    'yellow': 0
+    'green': -10,
+    'yellow': 0,
+    'orange': -15,
+    'black': 20,
+    'pink': -5,
+    'brown': 15,
 }
 
 client = OpenAI()  # read API key

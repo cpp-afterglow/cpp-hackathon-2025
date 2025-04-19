@@ -1,0 +1,161 @@
+.advisor-container {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #ff5f6d, #ffc371);
+    box-sizing: border-box;
+  }
+  
+  .advisor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #fff;
+    background-color: transparent; 
+  }
+  
+  .advisor-name-box {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .advisor-signout {
+    font-size: 1rem;
+    text-decoration: underline;
+    color: #ffe9ec;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-right: 1rem;
+  }
+  
+  .advisor-signout:hover {
+    color: #ffffff;
+  }
+  
+  
+  .advisor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2rem;
+    height: calc(100vh - 6rem);
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  
+  .advisor-section {
+    background-color: #1a1c2c;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: #ffe9ec;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+  
+  .adv-input {
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: none;
+  }
+  
+  .adv-button {
+    background-color: #eec7b3;
+    border: none;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .graph-placeholder {
+    width: 100%;
+    height: 85%;
+    background-color: #2e3a59;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+  }
+  
+  .advisor-card {
+    background-color: #2e3a59;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.3rem;
+    margin-top: 0.3rem;
+    
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .advisor-card:hover {
+    background-color: #3b486c;
+  }
+  
+  .card-name {
+    font-weight: bold;
+    flex: 1;
+    color: #ffe9ec;
+  }
+  
+  .card-score {
+    flex-shrink: 0;
+    color: #ffc371;
+  }
+  
+  .card-date {
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  
+
+  .advisor-section-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #ffe9ec;
+  }
+  
+
+  .search-dropdown {
+    background-color: #1a1c2c;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .search-option {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: #ffe9ec;
+  }
+  
+  .search-option:hover {
+    background-color: #2e3a59;
+  }
+
+  .search-input {
+    margin-top: 2rem;
+    margin-bottom: 2rem; /* adds spacing between each input */
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: none;
+    color: #7d7c85;
+  }
+  
+  

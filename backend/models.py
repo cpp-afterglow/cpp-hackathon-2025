@@ -1,3 +1,4 @@
+#models
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -62,7 +63,7 @@ class Score(db.Model):
 
     date = db.Column(db.Date, nullable=False)  # 1 entry per student per day
 
-    daily_score = db.Column(db.Integer, nullable=False)  # computed from mood + journal
+    daily_score = db.Column(db.Integer, nullable=False)  #this is just mood plus journal YOU CAN CHANGE THIS 
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
