@@ -147,4 +147,15 @@
   .search-option:hover {
     background-color: #2e3a59;
   }
+
+  .search-input {
+    margin-top: 2rem;
+    margin-bottom: 2rem; /* adds spacing between each input */
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: none;
+    color: #7d7c85;
+  }
+  
   

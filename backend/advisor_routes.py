@@ -28,7 +28,7 @@ def get_high_priority_students(advisor_id):
               (Score.student_id == recent_score_subquery.c.student_id) &
               (Score.date == recent_score_subquery.c.latest_date))
         .filter(Student.advisor_id == advisor_id)
-        .order_by(Score.daily_score.asc())  # sort by lowest recent score
+        .order_by(Score.daily_score.desc())   #highest first HIGH PRIORITY
         .limit(per_page)
         .offset((page - 1) * per_page)
         .all()
@@ -61,6 +61,7 @@ def search_students(advisor_id):
 def get_student_submissions(student_id):
     moods = MoodSubmission.query.filter_by(student_id=student_id).order_by(MoodSubmission.date.desc()).all()
     forms = FormSubmission.query.filter_by(student_id=student_id).order_by(FormSubmission.date.desc()).all()
+    scores = Score.query.filter_by(student_id=student_id).order_by(Score.date.desc()).all()
 
     student = Student.query.get_or_404(student_id)
 
@@ -80,8 +81,15 @@ def get_student_submissions(student_id):
                 "text": f.text,
                 "category": f.category
             } for f in forms
+        ],
+        "scores": [
+            {
+                "date": s.date.isoformat(),
+                "daily_score": s.daily_score
+            } for s in scores
         ]
     }), 200
+
 
 @advisor_bp.route("/advisor/date/<date_str>", methods=["GET"])
 def get_data_by_date(date_str):
@@ -111,6 +119,31 @@ def get_data_by_date(date_str):
             "date": s.date.isoformat()
         } for s in scores]
     }), 200
+
+
+@advisor_bp.route("/advisor/<int:advisor_id>/search-by-score", methods=["GET"])
+def search_by_score(advisor_id):
+    score_value = request.args.get("score")
+    if score_value is None:
+        return jsonify({"error": "Missing score"}), 400
+
+    results = (
+        db.session.query(Score, Student)
+        .join(Student, Score.student_id == Student.id)
+        .filter(Score.daily_score == int(score_value), Student.advisor_id == advisor_id)
+        .order_by(Score.date.desc())
+        .all()
+    )
+
+    return jsonify([
+        {
+            "id": student.id,
+            "name": student.name,
+            "score": score.daily_score,
+            "date": score.date.isoformat()
+        }
+        for score, student in results
+    ])
 
 
 

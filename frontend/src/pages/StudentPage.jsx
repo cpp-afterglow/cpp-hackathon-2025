@@ -9,6 +9,7 @@ const StudentPage = () => {
   const [forms, setForms] = useState([]);
   const [studentName, setStudentName] = useState("");
   const navigate = useNavigate();
+  const [scores, setScores] = useState([]);
 
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const StudentPage = () => {
       setMoods(data.moods);
       setForms(data.forms);
       setStudentName(data.name); 
+      setScores(data.scores);
     };
     fetchSubmissions();
   }, [id]);
@@ -31,29 +33,61 @@ const StudentPage = () => {
         </p>
     </div>
 
-      <div className="submission-column">
+    <div className="submission-column">
         <h3>Mood Submissions</h3>
         {moods.map((m, i) => (
-          <div className="submission-card" key={i}>
+            <div
+            className="submission-card"
+            key={i}
+            onClick={() => navigate(`/score/${m.date}`)}
+            style={{ cursor: "pointer" }}
+            >
             <p>Date: {m.date}</p>
             <p>Slider: {m.slider_value}</p>
             <p>Color: {m.color}</p>
             <p>Image: {m.image}</p>
-          </div>
+            </div>
         ))}
       </div>
+
 
       <div className="submission-column">
         <h3>Form Submissions</h3>
         {forms.map((f, i) => (
-          <div className="submission-card" key={i}>
+            <div
+            className="submission-card"
+            key={i}
+            onClick={() => navigate(`/score/${f.date}`)}
+            style={{ cursor: "pointer" }}
+            >
             <p>Date: {f.date}</p>
             <p>Category: {f.category}</p>
             <p>{f.text}</p>
-          </div>
+            </div>
         ))}
-      </div>
+       </div>
+
+      <div className="submission-column special-column">
+        <h3>Calculated Score History</h3>
+        {scores.length === 0 ? (
+            <p>No scores available.</p>
+        ) : (
+            scores.map((s, i) => (
+            <div
+                className="submission-card score-card"
+                key={i}
+                onClick={() => navigate(`/score/${s.date}`)}
+                style={{ cursor: "pointer" }}
+            >
+                <p>Date: {s.date}</p>
+                <p>Score: {s.daily_score}</p>
+            </div>
+            ))
+        )}
+        </div>
+
     </div>
+    
   );
 };
 

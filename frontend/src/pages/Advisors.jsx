@@ -72,6 +72,7 @@ const AdvisorPage = ({ advisorName }) => {
             <input
                 className="adv-input"
                 type="text"
+                className="search-input"
                 placeholder="Search by name"
                 value={searchQuery}
                 onChange={async (e) => {
@@ -98,11 +99,24 @@ const AdvisorPage = ({ advisorName }) => {
             <input
                 className="adv-input"
                 type="date"
+                className="search-input"
                 onChange={(e) => {
                     const selectedDate = e.target.value;
                     if (selectedDate) navigate(`/score/${selectedDate}`);
                 }}
                 placeholder="Search by date"
+            />
+            <input
+                type="number"
+                className="search-input"
+                placeholder="Search by score value"
+                onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                    const score = e.target.value;
+                    if (!score.trim()) return;
+                    navigate(`/score-by-value/${score}`);
+                    }
+                }}
             />
 
 
