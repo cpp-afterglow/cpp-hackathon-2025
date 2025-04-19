@@ -54,7 +54,7 @@
     overflow-y: auto;
   }
   
-  input {
+  .adv-input {
     display: block;
     margin: 0.5rem 0;
     padding: 0.5rem;
@@ -63,7 +63,7 @@
     border: none;
   }
   
-  button {
+  .adv-button {
     background-color: #eec7b3;
     border: none;
     border-radius: 0.5rem;

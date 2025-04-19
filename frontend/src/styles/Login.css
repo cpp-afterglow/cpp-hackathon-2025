@@ -110,16 +110,16 @@ indigo: #1a1c2c
 }
 
 /*THIS IS FOR THE FORMPAGE TEXTBOX NOT LOGIN*/
-.lin-textarea {
-    width: 100%;
-    height: 400px;
-    padding: 1rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #ffffff;
-    color: #050505;
-    border-radius: 0.5rem;
-    border: none;
-    resize: none;
-    box-sizing: border-box; 
-  }
+ .lin-textarea {
+     width: 100%;
+     height: 400px;
+     padding: 1rem;
+     font-size: 1rem;
+     line-height: 1.5;
+     background-color: #ffffff;
+     color: #050505;
+     border-radius: 0.5rem;
+     border: none;
+     resize: none;
+     box-sizing: border-box; 
+   }

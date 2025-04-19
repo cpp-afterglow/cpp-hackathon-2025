@@ -8,12 +8,12 @@ import excitedImg from "../images/excited.png";
 import '../styles/Student.css'
 
 const images = [
-  { src: happyImg, alt: "Happy" },
-  { src: sadImg, alt: "Sad" },
-  { src: angryImg, alt: "Angry" },
-  { src: relaxedImg, alt: "Relaxed" },
-  { src: nervousImg, alt: "Nervous" },
-  { src: excitedImg, alt: "Excited" },
+  { src: happyImg, alt: "happy.png" },
+  { src: sadImg, alt: "sad.png" },
+  { src: angryImg, alt: "angry.png" },
+  { src: relaxedImg, alt: "relaxed.png" },
+  { src: nervousImg, alt: "nervous.png" },
+  { src: excitedImg, alt: "excited.png" },
   ];
 
 const ImageSelector = ({ selectedImage, onSelect }) => {

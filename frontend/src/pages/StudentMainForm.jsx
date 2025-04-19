@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useUser } from '../Context';
 import { Card, CardHeader, CardBody, CardFooter, Button } from '@heroui/react';
+import { useNavigate } from 'react-router-dom';
+
 import MoodSlider from '../components/MoodSlider';
 import ColorChoice from '../components/ColorChoice';
 import ImageSelector from '../components/ImageSelector';
@@ -8,6 +10,7 @@ import ImageSelector from '../components/ImageSelector';
 import '../styles/Student.css';
 
 const StudentMainForm = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -19,21 +22,7 @@ const StudentMainForm = () => {
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
 
-  const handleSubmit = () => {
-    fetch('/api/mood', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // Handle response
-      });
-  };
-
-  if (!user) {
-    return <div>Please log in to access this page.</div>;
-  }
+  
 
   return (
     <div className="snt">
@@ -70,7 +59,7 @@ const StudentMainForm = () => {
 
     {step < 2 
       ? <Button className='snt-button' onPress={handleNext}>Next</Button> 
-      : <Button className='snt-submit' onPress={handleSubmit}>Submit</Button>}
+      : <Button className='snt-submit' onPress={navigate('/transition')}>Submit</Button>}
   </div>
         </CardFooter>
       </Card>

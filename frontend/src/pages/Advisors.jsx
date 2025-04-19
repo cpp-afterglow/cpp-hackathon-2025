@@ -36,15 +36,15 @@ const AdvisorPage = ({ advisorName }) => {
 
         <div className="advisor-section top-right">
           <h3>Search Functions</h3>
-          <input type="text" placeholder="Search by name" />
-          <input type="date" />
-          <input type="number" placeholder="Search by score value" />
+          <input className='adv-input' type="text" placeholder="Search by name" />
+          <input className='adv-input' type="date" />
+          <input className='adv-input' type="number" placeholder="Search by score value" />
         </div>
 
         <div className="advisor-section bottom-left">
           <h3>Graphs and Comparison Settings</h3>
-          <button>Single Variable</button>
-          <button>Multiple Variables</button>
+          <button className="adv-button">Single Variable</button>
+          <button className="adv-button">Multiple Variables</button>
         </div>
 
         <div className="advisor-section bottom-right">
