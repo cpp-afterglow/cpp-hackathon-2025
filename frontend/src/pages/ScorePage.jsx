@@ -8,6 +8,7 @@ const ScorePage = () => {
   const [forms, setForms] = useState([]);
   const [scores, setScores] = useState([]);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,36 +30,62 @@ const ScorePage = () => {
 
       <div className="submission-column">
         <h3>Mood Submissions</h3>
-        {moods.length ? moods.map((m, i) => (
-          <div className="submission-card" key={i}>
-            <p>Student ID: {m.student_id}</p>
+        {moods.map((m, i) => (
+            <div
+            className="submission-card"
+            key={i}
+            onClick={() => navigate(`/student/${m.student_id}`)}
+            style={{ cursor: "pointer" }}
+            >
+            <p>Date: {m.date}</p>
             <p>Slider: {m.slider_value}</p>
             <p>Color: {m.color}</p>
             <p>Image: {m.image}</p>
-          </div>
-        )) : <p>No moods</p>}
+            </div>
+        ))}
       </div>
+
+
+
 
       <div className="submission-column">
         <h3>Form Submissions</h3>
         {forms.length ? forms.map((f, i) => (
-          <div className="submission-card" key={i}>
-            <p>Student ID: {f.student_id}</p>
+            <div
+            className="submission-card"
+            key={i}
+            onClick={() => navigate(`/student/${f.student_id}`)}
+            style={{ cursor: "pointer" }}
+            >
+            <p>Date: {f.date}</p>
             <p>Category: {f.category}</p>
             <p>{f.text}</p>
-          </div>
+            </div>
         )) : <p>No forms</p>}
       </div>
 
-      <div className="submission-column">
+
+
+      <div className="submission-column special-column">
         <h3>Total Scores</h3>
-        {scores.length ? scores.map((s, i) => (
-          <div className="submission-card" key={i}>
-            <p>Student ID: {s.student_id}</p>
-            <p>Score: {s.daily_score}</p>
-          </div>
-        )) : <p>No scores</p>}
+        {scores.length === 0 ? (
+            <p>No scores available.</p>
+        ) : (
+            scores.map((s, i) => (
+            <div
+                className="submission-card score-card"
+                key={i}
+                onClick={() => navigate(`/student/${s.student_id}`)}
+                style={{ cursor: "pointer" }}
+            >
+                <p>Date: {s.date}</p>
+                <p>Student ID: {s.student_id}</p>
+                <p>Score: {s.daily_score}</p>
+            </div>
+            ))
+        )}
       </div>
+
     </div>
   );
 };

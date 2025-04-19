@@ -14,6 +14,7 @@ import AdvisorPage from "./pages/Advisors.jsx";
 import StudentTransition from "./pages/StudentTransition.jsx";
 import StudentPage from "./pages/StudentPage.jsx";
 import ScorePage from "./pages/ScorePage.jsx";
+import ScoreByValuePage from "./pages/ScoreByValuepage.jsx";
 
 const Layout = () => {
   return (
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         path: "/score/:date",
         element: <ScorePage />
       },
+      {
+        path: "/score-by-value/:value",
+        element: <ScoreByValuePage />
+      }
     ]
   }
 

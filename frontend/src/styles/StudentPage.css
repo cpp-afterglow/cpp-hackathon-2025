@@ -13,6 +13,7 @@
   .submission-column {
     background-color: #1a1c2c;
     color: #ffe9ec;
+    font-size: 1.6;
     padding: 1.5rem;
     border-radius: 1rem;
     width: 40%;
@@ -57,5 +58,16 @@
     color: #ffffff;
   }
   
+  .special-column {
+    background-color: #34495e;
+  }
   
+  .score-card:hover {
+    background-color: #3e5a78;
+  }
+  
+  .submission-card:hover {
+    background-color: #3b486c; 
+    transition: background-color 0.2s ease;
+  }
   
