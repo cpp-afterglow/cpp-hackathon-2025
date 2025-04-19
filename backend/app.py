@@ -5,13 +5,14 @@ from dotenv import load_dotenv
 import os
 
 from models import db, Student
+from auth import auth_bp 
 
 load_dotenv()  # Loads DATABASE_URL from .env
 
 app = Flask(__name__)
 CORS(app)
 
-# ✅ DB Config
+# DB Config
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -21,6 +22,8 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+app.register_blueprint(auth_bp) 
+
 @app.route("/")
 def hello():
     return jsonify(message="Flask is Running and Connected to Railway DB!")
@@ -29,3 +32,7 @@ def hello():
 def list_students():
     students = Student.query.all()
     return jsonify([{"id": s.id, "name": s.name} for s in students])
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
