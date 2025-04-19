@@ -18,7 +18,8 @@ const StudentPage = () => {
       const data = await res.json();
       setMoods(data.moods || []);         
     setForms(data.forms || []);      
-    setStudentName(data.name || "");     
+    setStudentName(data.name || "");  
+    setScores(data.scores || []);    
     };
     fetchSubmissions();
   }, [id]);
