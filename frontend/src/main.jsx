@@ -10,6 +10,7 @@ import TestPage from "./pages/Test.jsx";
 import LoginPage from "./pages/Login.jsx";
 import StudentMainForm from "./pages/StudentMainForm.jsx";
 import FormPage from "./pages/FormPage";
+import { UserProvider } from "./Context.jsx";
 
 const Layout = () => {
   return (
@@ -41,9 +42,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <UserProvider>
     <HeroUIProvider>
     <RouterProvider router={router} />
-
     </HeroUIProvider>
+    </UserProvider>
   </StrictMode>,
 )
