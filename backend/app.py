@@ -6,11 +6,15 @@ import os
 
 from models import db, Student
 from auth import auth_bp 
+from form_routes import form_bp
+
 
 load_dotenv()  # Loads DATABASE_URL from .env
 
+
+
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # DB Config
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
@@ -23,6 +27,7 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(auth_bp) 
+app.register_blueprint(form_bp)
 
 @app.route("/")
 def hello():

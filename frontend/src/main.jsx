@@ -8,6 +8,7 @@ import { HeroUIProvider } from "@heroui/react";
 
 import TestPage from "./pages/Test.jsx";
 import LoginPage from "./pages/Login.jsx";
+import FormPage from "./pages/FormPage";
 
 const Layout = () => {
   return (
@@ -29,6 +30,8 @@ const router = createBrowserRouter([
         path: "/login",
         element: <TestPage />
       },
+      { path: "/journal",
+        element: <FormPage /> }
     ]
   }
 
