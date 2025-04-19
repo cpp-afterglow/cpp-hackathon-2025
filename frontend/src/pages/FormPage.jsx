@@ -4,45 +4,61 @@ import { Card, CardBody, CardFooter, CardHeader, Textarea, Button } from "@herou
 import "../styles/Login.css"; // reusing same background SORRY but faster i think!!
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../Context";
 
 const FormPage = ({ goBack }) => {
+  const { user } = useUser();
   const [text, setText] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("VITE_API_BASE is:", import.meta.env.VITE_API_BASE);
+    
   }, []);
 
 
   const handleSubmit = async () => {
     if (!text.trim()) return;
+    const studentId = user.id;
+    const sliderVal = parseInt(localStorage.getItem('mood'), 10);;
+    const color = localStorage.getItem('color');;
+    const img = localStorage.getItem('image');;
+    const date = new Date().toISOString().split("T")[0];
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    const today = new Date().toISOString().split("T")[0];
-
-    const res = await fetch(`${import.meta.env.VITE_API_BASE}/submit-form`, {
+    const pd = {
+      student_id: studentId,
+      slider_value: sliderVal,
+      color: color,
+      image: img,
+      date: date,
+      text: text,
+      category: "neutral" 
+    };
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE}/submit_score`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        student_id: user.id,
-        date: today,
-        text,
-        category: "neutral" 
-      }),
-    });
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pd),
+      });
 
-    const data = await res.json();
-    if (res.ok) {
-      setSubmitted(true);
-      localStorage.removeItem("user");
+      const data = await response.json();
 
-      setTimeout(() => {
-        navigate("/"); 
-      }, 1500);
-    } else {
-      alert(data.error || "Failed to submit");
+      if (response.ok) {
+        setSubmitted(true);
+        localStorage.removeItem("form");
+
+        setTimeout(() => {
+          navigate("/"); 
+        }, 1500);
+      } else {
+        console.error("Error submitting score:", data.error);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
     }
+
   };
 
   return (
@@ -60,7 +76,7 @@ const FormPage = ({ goBack }) => {
           </CardHeader>
           <CardBody className="lin-card-body">
             {submitted ? (
-              <p className="text-green-300 text-lg">Your journal was submitted, Thank you!</p>
+              <p className="lin-card-header">Your journal was submitted, Thank you!</p>
             ) : (
                 <textarea
                     className="lin-textarea"

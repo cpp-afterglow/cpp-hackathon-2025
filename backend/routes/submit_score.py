@@ -10,7 +10,6 @@ submit_score_bp = Blueprint("submit_score", __name__)
 def submit_score():
     data = request.get_json()
 
-    # Extract required and optional fields from request JSON
     student_id = data.get("student_id")
     slider_value = data.get("slider_value")
     color = data.get("color")
@@ -19,8 +18,9 @@ def submit_score():
     text = data.get("text")
     category = data.get("category")
 
-    # Basic validation for required fields
-    if not all([student_id, slider_value is not None, color, date_str]):
+
+    if not student_id or slider_value is None or not color or not date_str:
+        
         return jsonify({"error": "Missing required fields"}), 400
 
     # Create a MoodSubmission entry

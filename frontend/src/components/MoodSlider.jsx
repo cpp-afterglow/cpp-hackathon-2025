@@ -5,7 +5,7 @@ import '../styles/Student.css'
 const MoodSlider = ({ value, onChange }) => {
   return (
     <div className="snt-card-center">
-      <h2 className="snt-desc-text">How are you feeling today?</h2>
+      <h2 className="snt-desc-text">How are you feeling today?  </h2>
       <Slider
         className="w-full"
         minValue={0}
@@ -16,6 +16,7 @@ const MoodSlider = ({ value, onChange }) => {
         size="lg"
         onChange={onChange}
       />
+      <h3 className="snt-desc-text-small">0 - No Problem <span style={{ marginLeft: "9rem" }}>100 - Feeling Overwhelmed</span></h3>
     </div>
   );
 };

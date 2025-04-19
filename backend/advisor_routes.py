@@ -145,6 +145,120 @@ def search_by_score(advisor_id):
         for score, student in results
     ])
 
+@advisor_bp.route("/advisor/<int:advisor_id>/graph-data", methods=["POST"])
+def generate_graph_data(advisor_id):
+    from datetime import datetime, timedelta
+    data = request.get_json()
+    selected_options = data.get("selections", [])
 
+    if not selected_options:
+        return jsonify({"error": "No selections provided"}), 400
 
+    response_data = []
 
+    for selection in selected_options:
+        student_id = selection.get("studentId")
+        date_range = selection.get("dateRange")
+        data_type = selection.get("dataType")
+
+        # Setup base query
+        if student_id == "all":
+            if data_type == "score":
+                base = db.session.query(
+                    Score.date,
+                    func.avg(Score.daily_score).label("value")
+                ).join(Student).filter(Student.advisor_id == advisor_id)
+            elif data_type == "mood":
+                base = db.session.query(
+                    MoodSubmission.date,
+                    func.avg(MoodSubmission.slider_value).label("value")
+                ).join(Student).filter(Student.advisor_id == advisor_id)
+
+                if date_range == "month":
+                    base = base.filter(MoodSubmission.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    base = base.filter(MoodSubmission.date >= datetime.utcnow() - timedelta(days=7))
+
+                base = base.group_by(MoodSubmission.date).order_by(MoodSubmission.date)
+                results = base.all()
+
+                line_data = {
+                    "id": f"All Students - {data_type}",
+                    "data": [{"x": r.date.isoformat(), "y": r.value} for r in results]
+                }
+                response_data.append(line_data)
+            elif data_type == "form":
+                base = db.session.query(
+                    FormSubmission.date,
+                    func.count(FormSubmission.text).label("value")
+                ).join(Student).filter(Student.advisor_id == advisor_id)
+
+                if date_range == "month":
+                    base = base.filter(FormSubmission.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    base = base.filter(FormSubmission.date >= datetime.utcnow() - timedelta(days=7))
+
+                base = base.group_by(FormSubmission.date).order_by(FormSubmission.date)
+                results = base.all()
+
+                line_data = {
+                    "id": f"All Students - {data_type}",
+                    "data": [{"x": r.date.isoformat(), "y": r.value} for r in results]
+                }
+                response_data.append(line_data)
+            else:
+                continue
+
+            if date_range == "month":
+                base = base.filter(Score.date >= datetime.utcnow() - timedelta(days=30))
+            elif date_range == "week":
+                base = base.filter(Score.date >= datetime.utcnow() - timedelta(days=7))
+
+            base = base.group_by("date").order_by("date")
+            results = base.all()
+
+            line_data = {
+                "id": f"All Students - {data_type}",
+                "data": [{"x": r.date.isoformat(), "y": r.value} for r in results]
+            }
+            response_data.append(line_data)
+
+        else:
+            if data_type == "score":
+                query = Score.query.filter_by(student_id=student_id)
+                if date_range == "month":
+                    query = query.filter(Score.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    query = query.filter(Score.date >= datetime.utcnow() - timedelta(days=7))
+                scores = query.order_by(Score.date.asc()).all()
+                data_points = [{"x": s.date.isoformat(), "y": s.daily_score} for s in scores]
+                label = f"Student {student_id} - {data_type}"
+            elif data_type == "mood":
+                query = MoodSubmission.query.filter_by(student_id=student_id)
+                if date_range == "month":
+                    query = query.filter(MoodSubmission.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    query = query.filter(MoodSubmission.date >= datetime.utcnow() - timedelta(days=7))
+                moods = query.order_by(MoodSubmission.date.asc()).all()
+                data_points = [{"x": m.date.isoformat(), "y": m.slider_value} for m in moods]
+                label = f"Student {student_id} - {data_type}"
+            elif data_type == "form":
+                query = FormSubmission.query.filter_by(student_id=student_id)
+                if date_range == "month":
+                    query = query.filter(FormSubmission.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    query = query.filter(FormSubmission.date >= datetime.utcnow() - timedelta(days=7))
+                forms = query.order_by(FormSubmission.date.asc()).all()
+                from collections import defaultdict
+                day_counts = defaultdict(int)
+                for f in forms:
+                    day_counts[f.date.isoformat()] += 1
+                data_points = [{"x": k, "y": v} for k, v in sorted(day_counts.items())]
+                label = f"Student {student_id} - {data_type}"
+            else:
+                continue
+
+            if data_points:
+                response_data.append({"id": label, "data": data_points})
+
+    return jsonify(response_data), 200

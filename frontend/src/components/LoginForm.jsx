@@ -61,7 +61,7 @@ const LoginFormCard = ({ role, goBack }) => {
             {role === 'student' ? 'Student' : 'Advisor'} Login
             </h2>
         </CardHeader>
-      <CardBody className="lin-card-body">
+      <CardBody className="lin-card-body-center">
         <Input
           isRequired
           className="lin-input"
