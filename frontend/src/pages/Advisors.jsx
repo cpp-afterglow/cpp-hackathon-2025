@@ -29,18 +29,24 @@ const AdvisorPage = () => {
   };
   
   const generateGraph = async () => {
+    setGraphData([]);//clear the previous data
+
     const filtered = configs.filter(c =>
       c.studentId && c.dateRange && c.dataType
     );
     if (!filtered.length) return;
   
-    const res = await fetch(`${import.meta.env.VITE_API_BASE}/advisor/${advisorId}/graph-data`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ selections: filtered })
-    });
-    const data = await res.json();
-    setGraphData(data);
+    try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/advisor/${advisorId}/graph-data`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ selections: filtered })
+        });
+        const data = await res.json();
+        setGraphData(data);
+      } catch (err) {
+        console.error("Failed to fetch graph data:", err);
+      }
   };
   
 

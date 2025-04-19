@@ -173,11 +173,39 @@ def generate_graph_data(advisor_id):
                     MoodSubmission.date,
                     func.avg(MoodSubmission.slider_value).label("value")
                 ).join(Student).filter(Student.advisor_id == advisor_id)
+
+                if date_range == "month":
+                    base = base.filter(MoodSubmission.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    base = base.filter(MoodSubmission.date >= datetime.utcnow() - timedelta(days=7))
+
+                base = base.group_by(MoodSubmission.date).order_by(MoodSubmission.date)
+                results = base.all()
+
+                line_data = {
+                    "id": f"All Students - {data_type}",
+                    "data": [{"x": r.date.isoformat(), "y": r.value} for r in results]
+                }
+                response_data.append(line_data)
             elif data_type == "form":
                 base = db.session.query(
                     FormSubmission.date,
                     func.count(FormSubmission.text).label("value")
                 ).join(Student).filter(Student.advisor_id == advisor_id)
+
+                if date_range == "month":
+                    base = base.filter(FormSubmission.date >= datetime.utcnow() - timedelta(days=30))
+                elif date_range == "week":
+                    base = base.filter(FormSubmission.date >= datetime.utcnow() - timedelta(days=7))
+
+                base = base.group_by(FormSubmission.date).order_by(FormSubmission.date)
+                results = base.all()
+
+                line_data = {
+                    "id": f"All Students - {data_type}",
+                    "data": [{"x": r.date.isoformat(), "y": r.value} for r in results]
+                }
+                response_data.append(line_data)
             else:
                 continue
 
