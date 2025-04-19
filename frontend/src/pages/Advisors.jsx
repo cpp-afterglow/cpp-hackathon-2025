@@ -3,6 +3,10 @@ import "../styles/Advisors.css";
 import { useNavigate } from "react-router-dom";
 import AdvisorCard from "../components/AdvisorCard";
 import { useUser } from "../Context";
+import GraphSettingsPanel from "../components/GraphSettingsPanel";
+import GraphDisplay from "../components/GraphDisplay";
+
+
 
 const AdvisorPage = () => {
   const { user } = useUser();
@@ -11,6 +15,31 @@ const AdvisorPage = () => {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [configs, setConfigs] = useState([
+    { studentId: "all", dateRange: "month", dataType: "score", graphType: "line" },
+    { studentId: "all", dateRange: "week", dataType: "mood", graphType: "line" },
+    { studentId: "all", dateRange: "week", dataType: "form", graphType: "line" }
+  ]);
+  const [graphData, setGraphData] = useState([]);
+  
+  const updateConfig = (index, field, value) => {
+    const newConfigs = [...configs];
+    newConfigs[index][field] = value;
+    setConfigs(newConfigs);
+  };
+  
+  const generateGraph = async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE}/advisor/${advisorId}/graph-data`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ selections: configs })
+    });
+    const data = await res.json();
+    setGraphData(data);
+  };
+  
+
+  
 
   const advisorName = user.name;
   const advisorId = user.id; 
@@ -124,14 +153,20 @@ const AdvisorPage = () => {
         </div>
 
         <div className="advisor-section bottom-left">
-          <h3 className="advisor-section-title">Graph Settings</h3>
-          <button className="adv-button">Single Variable</button>
-          <button className="adv-button">Multiple Variables</button>
+            <h3 className="advisor-section-title">Graph Settings</h3>
+            <GraphSettingsPanel
+                advisorId={advisorId}
+                students={students}
+                configs={configs}
+                updateConfig={updateConfig}
+                generateGraph={generateGraph}
+            />
         </div>
+
 
         <div className="advisor-section bottom-right">
             <h3 className="advisor-section-title">Graph Display</h3>
-          <div className="graph-placeholder">Currently None Selected</div>
+            <GraphDisplay graphData={graphData} />
         </div>
       </div>
     </div>
