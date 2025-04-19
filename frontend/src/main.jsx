@@ -12,6 +12,8 @@ import StudentMainForm from "./pages/StudentMainForm.jsx";
 import FormPage from "./pages/FormPage";
 import AdvisorPage from "./pages/Advisors.jsx";
 import StudentTransition from "./pages/StudentTransition.jsx";
+import StudentPage from "./pages/StudentPage.jsx";
+import ScorePage from "./pages/ScorePage.jsx";
 
 const Layout = () => {
   return (
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
       {
         path: "/transition",
         element: <StudentTransition/>
+      },
+      {
+        path: "/student/:id",
+        element: <StudentPage />
+      },
+      {
+        path: "/score/:date",
+        element: <ScorePage />
       },
     ]
   }

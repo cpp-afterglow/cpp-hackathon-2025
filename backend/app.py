@@ -4,9 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 from routes.submit_score import submit_score_bp
-from models import db, Student
+from models import db
 from auth import auth_bp 
 from form_routes import form_bp
+from advisor_routes import advisor_bp
+
 
 load_dotenv()  # Loads DATABASE_URL from .env
 
@@ -22,7 +24,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 
-
 # Create tables on startup
 with app.app_context():
     db.create_all()
@@ -31,15 +32,13 @@ with app.app_context():
 app.register_blueprint(auth_bp) 
 app.register_blueprint(form_bp)
 app.register_blueprint(submit_score_bp)
+app.register_blueprint(advisor_bp)
 
+#Purpose: Check if the backend is up using link 
 @app.route("/")
 def hello():
     return jsonify(message="Flask is Running and Connected to Railway DB!")
 
-@app.route("/students")
-def list_students():
-    students = Student.query.all()
-    return jsonify([{"id": s.id, "name": s.name} for s in students])
 
 if __name__ == "__main__":
     app.run(debug=True)
