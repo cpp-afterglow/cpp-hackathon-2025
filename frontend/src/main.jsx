@@ -10,6 +10,8 @@ import TestPage from "./pages/Test.jsx";
 import LoginPage from "./pages/Login.jsx";
 import StudentMainForm from "./pages/StudentMainForm.jsx";
 import FormPage from "./pages/FormPage";
+import AdvisorPage from "./pages/Advisors.jsx";
+import StudentTransition from "./pages/StudentTransition.jsx";
 
 const Layout = () => {
   return (
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
       },
       { path: "/journal",
          element: <FormPage /> 
+      },
+      {
+        path: "/advisor",
+        element: <AdvisorPage advisorName="Dr. Johnson" />
+      },
+      {
+        path: "/transition",
+        element: <StudentTransition/>
       },
     ]
   }
