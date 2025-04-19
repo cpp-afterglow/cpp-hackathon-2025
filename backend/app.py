@@ -6,6 +6,7 @@ import os
 
 from models import db, Student
 from auth import auth_bp 
+from form_routes import form_bp
 
 load_dotenv()  # Loads DATABASE_URL from .env
 
@@ -23,6 +24,7 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(auth_bp) 
+app.register_blueprint(form_bp)
 
 @app.route("/")
 def hello():
