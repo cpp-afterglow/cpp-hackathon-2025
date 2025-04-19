@@ -48,6 +48,8 @@ const FormPage = ({ goBack }) => {
       if (response.ok) {
         setSubmitted(true);
         localStorage.clear();
+
+        console.log("✅ RESPONSE FROM BACKEND:", data);
         console.log(data.summary);
         localStorage.setItem("ai_summ", data.summary);
 

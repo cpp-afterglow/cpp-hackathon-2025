@@ -8,7 +8,8 @@ const AISummary = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const summ = localStorage.getItem("ai_summary");
+        // const summ = localStorage.getItem("ai_summary");
+        const summ = localStorage.getItem("ai_summ");
         if(summ){
             setSummary(summ);
         }
