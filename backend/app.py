@@ -1,9 +1,7 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
+from app import create_app
 
-app = Flask(__name__)
-CORS(app)  # <- This allows all origins by default
+app = create_app()
 
 @app.route("/")
 def hello():
-    return jsonify(message="Hello Flask is Running and Connected !!")
+    return {"message": "Hello Flask is Running and Connected !!"}
